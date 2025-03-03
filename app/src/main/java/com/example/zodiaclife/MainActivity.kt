@@ -1,5 +1,6 @@
 package com.example.zodiaclife
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -43,7 +44,14 @@ class MainActivity : AppCompatActivity() {
 
         recyclerView = findViewById(R.id.recyclerView)
 
-        val adapter = HoroscopeAdapter(horoscopeList)
+        val adapter = HoroscopeAdapter(horoscopeList) { position ->
+            val horoscope = horoscopeList[position]
+
+            //Toast.makeText(this, horoscope.name, Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, DetailActivity::class.java)
+            intent.putExtra(DetailActivity.EXTRA_HOROSCOPE_ID, horoscope.id)
+            startActivity(intent)
+        }
 
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
